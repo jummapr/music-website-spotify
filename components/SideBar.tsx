@@ -7,13 +7,18 @@ import { BiSearch } from "react-icons/bi";
 import Box from "./Box";
 import SideBarItem from "./SideBarItem";
 import Library from "./Library";
+import { Song } from "@/types";
+import usePlayer from "@/hooks/usePlayer";
+import { twMerge } from "tailwind-merge";
 
 interface SideBarProps {
   children: React.ReactNode;
+  songs: Song[]
 }
 
-const SideBar: FC<SideBarProps> = ({ children }) => {
+const SideBar: FC<SideBarProps> = ({ children, songs }) => {
   const pathname = usePathname();
+  const player = usePlayer();
 
   const routes = useMemo(
     () => [
@@ -34,7 +39,7 @@ const SideBar: FC<SideBarProps> = ({ children }) => {
   );
 
   return (
-    <div className="flex h-full">
+    <div className={twMerge(`flex h-full `,player.activeId && 'h-[calc(100% - 80px)]')}>
       <div
         className="
         hidden
@@ -59,7 +64,7 @@ const SideBar: FC<SideBarProps> = ({ children }) => {
           </div>
         </Box>
         <Box className="overflow-y-auto h-full">
-          <Library />
+          <Library songs={songs}/>
         </Box>
       </div>
       <main className="h-full flex-1 overflow-y-auto py-2">{children}</main>
