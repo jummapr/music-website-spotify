@@ -9,14 +9,16 @@ import useUploadModal from "@/hooks/useUploadModal";
 import { Song } from "@/types";
 import MediaItem from "./MediaItem";
 import useOnPlay from "@/hooks/useOnPlay";
+import useSubscribeModal from "@/hooks/useSubscribeModal";
 
 interface LibraryProps {
   songs: Song[]
  }
 
 const Library: FC<LibraryProps> = ({ songs}) => {
+  const subscribeModal = useSubscribeModal();
   const authModal = useAuthModal();
-  const { user } = useUser();
+  const { user, subscription } = useUser();
   const uploadModal = useUploadModal();
   const onPlay = useOnPlay(songs);
   const onClick = () => {
@@ -25,7 +27,9 @@ const Library: FC<LibraryProps> = ({ songs}) => {
       return authModal.onOpen()
     }
 
-    //! TODO: Add a check for if the user is have subscription: 
+    if(!subscription) {
+      return subscribeModal.onOpen()
+    } 
     
 
     return uploadModal.onOpen()
