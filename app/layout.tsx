@@ -13,7 +13,7 @@ const font = Figtree({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Spotify clone",
-  description: "Listen to Music",
+  description: "Music website made by Jumma Hingorja",
 };
 
 export const revalidate = 0;
